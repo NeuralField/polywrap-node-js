@@ -1,0 +1,37 @@
+{
+  "name": "@neuralfield/polywrap-node-js",
+  "version": "0.1.0",
+  "main": "bin/main.js",
+  "types": "bin/main.d.ts",
+  "author": "nerfZael",
+  "license": "MIT",
+  "private": false,
+  "files": [
+    "/bin"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/NeuralField/polywrap-node-js.git"
+  },
+  "keywords": [
+    "polywrap",
+    "node-js"
+  ],
+  "scripts": {
+    "build": "tsc --project tsconfig.build.json",
+    "start": "ts-node src/main.ts",
+    "execute": "node bin/main.js"
+  },
+  "dependencies": {
+    "@web3api/client-js": "0.0.1-prealpha.80",
+    "@web3api/ethereum-plugin-js": "0.0.1-prealpha.80",
+    "@web3api/ipfs-plugin-js": "0.0.1-prealpha.80",
+    "@web3api/fs-plugin-js": "0.0.1-prealpha.80",
+    "typescript": "4.4.2"
+  },
+  "devDependencies": {
+    "@types/node": "16.11.11",
+    "ts-node": "10.3.0",
+    "@web3api/cli": "0.0.1-prealpha.80"
+  }
+}
