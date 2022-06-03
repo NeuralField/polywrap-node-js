@@ -1,0 +1,3 @@
+#import * into FooBar from "fs/./src/foobar-wrapper/build"
+#import * into HelloWorld from "ens/helloworld.web3api.eth"
+#import * into CoinGecko from "ipfs/QmP3MZcYiug8YHKet6uDmw13dkV7uMu5wmdmXz7HFgLtUy"

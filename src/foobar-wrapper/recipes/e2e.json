@@ -1,0 +1,67 @@
+[
+  {
+    "api": "w3://fs/./build",
+    "constants": "./constants.json"
+  },
+  {
+    "query": "./get.graphql",
+    "variables": {
+      "address": "$SimpleStorageAddr",
+      "network": "testnet"
+    }
+  },
+  {
+    "query": "./set.graphql",
+    "variables": {
+      "address": "$SimpleStorageAddr",
+      "value": 5,
+      "network": "testnet"
+    }
+  },
+  {
+    "query": "./get.graphql",
+    "variables": {
+      "address": "$SimpleStorageAddr",
+      "network": "testnet"
+    }
+  },
+  {
+    "query": "./set.graphql",
+    "variables": {
+      "address": "$SimpleStorageAddr",
+      "value": 569,
+      "network": "testnet"
+    }
+  },
+  {
+    "query": "./get.graphql",
+    "variables": {
+      "address": "$SimpleStorageAddr",
+      "network": "testnet"
+    }
+  },
+  {
+    "query": "./fooBar.graphql",
+    "variables": {
+      "value": 3
+    }
+  },
+  {
+    "query": "./fooBar.graphql",
+    "variables": {
+      "value": 5
+    }
+  },
+  {
+    "query": "./fooBar.graphql",
+    "variables": {
+      "value": 15
+    }
+  },
+  {
+    "query": "./fooBar.graphql",
+    "variables": {
+      "value": 2
+    }
+  }
+]

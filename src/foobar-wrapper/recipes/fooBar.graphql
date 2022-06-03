@@ -1,0 +1,3 @@
+query {
+  fooBar(value: $value)
+}
