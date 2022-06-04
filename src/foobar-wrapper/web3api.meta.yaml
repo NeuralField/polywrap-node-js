@@ -1,11 +1,9 @@
 format: 0.0.1-prealpha.3
-displayName: Simple Storage
-subtext: simple storage subtext
-description: simple storage description
+displayName: FooBar
+subtext: it is what it is
+description: FooBar wrapper
 tags:
-  - simple-storage
-  - storage
-  - ethereum
+  - foo-bar
 repository: https://github.com/test/test
 icon: ./meta/icon.png
 links:

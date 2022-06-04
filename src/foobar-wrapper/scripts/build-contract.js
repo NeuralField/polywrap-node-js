@@ -2,6 +2,8 @@ const solc = require("solc");
 const fs = require("fs");
 
 async function main() {
+  return;
+
   // Fetch the contract's source
   const contractSource = fs.readFileSync(
     `${__dirname}/../src/contracts/SimpleStorage.sol`, 'utf-8'

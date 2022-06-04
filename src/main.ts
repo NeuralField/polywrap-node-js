@@ -25,7 +25,7 @@ import { CoinGecko_Query, FooBar_Query, HelloWorld_Query } from "./w3";
 
   // CUSTOM FOOBAR WRAPPER EXAMPLE, RESOLVED THROUGH FS
   for (let i = 1; i < 21; i++) {
-    console.log(await (await FooBar_Query.fooBar({ value: i }, client)).data)
+    console.log((await FooBar_Query.fooBar({ value: i }, client)).data);
   }  
 
 

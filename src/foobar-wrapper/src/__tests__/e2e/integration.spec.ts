@@ -4,16 +4,14 @@ import {
   initTestEnvironment,
   stopTestEnvironment,
 } from "@web3api/test-env-js";
-import * as App from "../types/w3";
 import path from "path";
 
 import { getPlugins } from "../utils";
+import { FooBar_Query } from "../types/w3";
 
 jest.setTimeout(500000);
 
-describe("SimpleStorage", () => {
-  const CONNECTION = { networkNameOrChainId: "testnet" };
-
+describe("FooBar", () => {
   let client: Web3ApiClient;
   let ensUri: string;
 
@@ -52,43 +50,8 @@ describe("SimpleStorage", () => {
     await stopTestEnvironment();
   });
 
-  const getData = async (contractAddr: string): Promise<number> => {
-    const response = await App.SimpleStorage_Query.getData(
-      {
-        address: contractAddr,
-        connection: CONNECTION,
-      },
-      client,
-      ensUri
-    );
-
-    expect(response).toBeTruthy();
-    expect(response.error).toBeFalsy();
-    expect(response.data).not.toBeNull();
-
-    return response.data as number;
-  }
-
-  const setData = async (contractAddr: string, value: number): Promise<string> => {
-    const response = await App.SimpleStorage_Mutation.setData(
-      {
-        address: contractAddr,
-        connection: CONNECTION,
-        value: value,
-      },
-      client,
-      ensUri
-    );
-
-    expect(response).toBeTruthy();
-    expect(response.error).toBeFalsy();
-    expect(response.data).not.toBeNull();
-
-    return response.data as string;
-  }
-
   const fooBar = async(value: number): Promise<string> => {
-    const response = await App.SimpleStorage_Query.fooBar({ value: value }, client, ensUri);
+    const response = await FooBar_Query.fooBar({ value: value }, client, ensUri);
     
     expect(response).toBeTruthy();
     expect(response.error).toBeFalsy();
@@ -98,30 +61,6 @@ describe("SimpleStorage", () => {
   }
 
   it("sanity", async () => {
-    // Deploy contract
-    const deployContractResponse = await App.SimpleStorage_Mutation.deployContract(
-      { connection: CONNECTION },
-      client,
-      ensUri
-    );
-    expect(deployContractResponse).toBeTruthy();
-    expect(deployContractResponse.error).toBeFalsy();
-    expect(deployContractResponse.data).toBeTruthy();
-
-    const contractAddress = deployContractResponse.data as string;
-
-    // Get data
-    let data = await getData(contractAddress);
-    expect(data).toBe(0);
-
-    // Set data
-    const tx = await setData(contractAddress, 10);
-    expect(tx).toBeTruthy();
-
-    // Get data
-    data = await getData(contractAddress);
-    expect(data).toBe(10);
-
     //Foobar tests
     let fooBarResult = await fooBar(3);
     expect(fooBarResult).toBe("foo");
