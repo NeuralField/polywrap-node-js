@@ -1,24 +1,60 @@
 #!/usr/bin/env node
-import { Web3ApiClient } from "@web3api/client-js";
-import { filesystemPlugin } from "@web3api/fs-plugin-js";
+
+import { ClientConfigBuilder, PolywrapClient } from "@polywrap/client-js";
+import { PluginPackage } from "@polywrap/plugin-js";
+import { TextEncoder } from "util";
 
 (async () => {
-  const client = new Web3ApiClient();
+  const config = new ClientConfigBuilder()
+  .addDefaults()
+  .addPackage("wrap://ipfs/QmczB9WjLgZuuBhHwCAaCGNguTBoSFqUqa7fdLpYiJx5VL", PluginPackage.from(mod => {
+    return {
+      "getResource": async (args: any) => {
+        console.log("GET RESOURCE", args.filePath);
+        return new TextEncoder().encode(`
+        function doStuff(args) {
+          function alog(a) {
+            var x = subinvoke("ens/logger.eth", "debug", { prop: "as" });
+           x = subinvoke("ens/logger.eth", "debug", { prop: "as2" });
+            return "x";
+          };
 
-  console.log("redirects", client.getRedirects());
-  console.log("envs", client.getEnvs());
-  console.log("plugins", client.getPlugins());
-  console.log("resolvers", client.getUriResolvers());
-
-  const clientWithOverrides = new Web3ApiClient({
-    plugins: [
-      {
-        uri: "ens/fs.web3api.eth",
-        plugin: filesystemPlugin({ query: {}})
+          let b = alog("a");
+          return {
+            prop2: b
+          };
+        }`);
       }
-    ]
-  });
+    };
+  }))
+  .addPackage("wrap://mock/dep", PluginPackage.from(mod => {
+    return {
+      "callMe": async (args: any) => {
+        return "prop: " + args.prop;
+      }
+    };
+  }))
+  .addPackage("wrap://ens/logger.eth", PluginPackage.from(mod => {
+    return {
+      "debug": async (args: any) => {
+        console.log("DEBUG", args.prop);
+        return args;
+      }
+    };
+  }))
+  .build();
+const client = new PolywrapClient(config);
 
-  console.log(client.getPlugins().length);
-  console.log(clientWithOverrides.getPlugins().length);
+const result = await client.invoke<{
+  prop2: string
+}>({
+  uri: "wrap://ipfs/QmcD3YRWg2uMUkrmZZWqnDhmxSEmvaGBV5XUFuGcEao5w4",
+  method: "doStuff",
+  args: {
+    prop1: "Hello"
+  },
+});
+
+!result.ok && console.log("Error", result);
+result.ok && console.log("RESULT", result.value);
 })();
